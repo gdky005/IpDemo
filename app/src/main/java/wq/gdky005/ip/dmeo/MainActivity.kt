@@ -1,31 +1,54 @@
 package wq.gdky005.ip.dmeo
 
-import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.Handler
+import android.os.Message
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import com.blankj.utilcode.util.NetworkUtils
 import com.blankj.utilcode.util.ShellUtils
 import com.blankj.utilcode.util.ToastUtils
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
+
 class MainActivity : AppCompatActivity() {
 
-    var IP_URL = "cip.cc"
+    companion object {
+        var FLAG_MSG_UPDATE_UI = 1
+        var IP_URL = "cip.cc"
+    }
 
-    @SuppressLint("SetTextI18n")
+    private val handler : Handler = Handler{
+        when(it.what){
+            FLAG_MSG_UPDATE_UI ->{
+                val list = it.obj as List<String>
+                val text = list[0]
+                val responseText = list[1]
+
+                tv_base_info.text = text
+                tv_response_info.text = responseText
+
+                Snackbar.make(fab, "$IP_URL 检测成功", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
+            }
+            else -> {
+            }
+        }
+        false
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        getIp()
-
+        val ips  = resources.getStringArray(R.array.ips)
+        val spinnerAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, ips)
+        spinner.adapter = spinnerAdapter
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {//function
             }
@@ -36,55 +59,41 @@ class MainActivity : AppCompatActivity() {
                 IP_URL = url
                 ToastUtils.showShort("你选择的检测域名是：$url")
             }
-
         }
+        spinner.setSelection(ips.indexOf(IP_URL))
+        getIp()
 
-        fab.setOnClickListener { view ->
+        fab.setOnClickListener {
             getIp()
-
-            Snackbar.make(view, getIp(), Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
         }
     }
 
-    private fun getIp(): String {
+    private fun getIp() {
+        Thread {
+            val ip = NetworkUtils.getIPAddress(true)
+            val isWifi = NetworkUtils.isWifiAvailable()
+            val wifiIp = NetworkUtils.getIpAddressByWifi()
+            val cmdIpInfo = ShellUtils.execCmd("curl $IP_URL", false)
 
-        val ip = NetworkUtils.getIPAddress(true)
-        val isWifi = NetworkUtils.isWifiAvailable()
-        val wifiIp = NetworkUtils.getIpAddressByWifi()
-        val cmdIpInfo = ShellUtils.execCmd("curl $IP_URL", false)
+            val text = "当前的网络 ip 是：$ip \n Wifi 状态：$isWifi ===> $wifiIp"
 
-        val text = """
-                获取当前的网络 ip 是：$ip.
+            var responseText = "curl 获取的 ip 信息：\n\n\n"
 
-                Wifi 状态：$isWifi, wifiIp: $wifiIp.
+            responseText += if (cmdIpInfo.result == 0) {
+                cmdIpInfo.successMsg
+            } else {
+                cmdIpInfo.errorMsg
+            }
 
-                curl 获取的 ip 信息：
+            val msg : Message = handler.obtainMessage()
+            msg.what = FLAG_MSG_UPDATE_UI
 
-                $cmdIpInfo
+            val list = mutableListOf<String>()
+            list.add(text)
+            list.add(responseText)
 
-
-            """
-
-
-        tv.text = ""
-        tv.text = text
-        return text
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
-        }
+            msg.obj = list
+            handler.sendMessage(msg)
+        }.start()
     }
 }
