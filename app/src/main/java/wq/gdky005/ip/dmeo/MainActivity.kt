@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.support.design.widget.Snackbar
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.blankj.utilcode.util.NetworkUtils
 import com.blankj.utilcode.util.ShellUtils
-import com.blankj.utilcode.util.ToastUtils
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
@@ -32,7 +32,8 @@ class MainActivity : AppCompatActivity() {
                 tv_base_info.text = text
                 tv_response_info.text = responseText
 
-                Snackbar.make(fab, "$IP_URL 检测成功", Snackbar.LENGTH_LONG)
+                swipeRefreshLayout.isRefreshing = false
+                Snackbar.make(fab, "$IP_URL 检测完成", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
             }
             else -> {
@@ -46,6 +47,16 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+
+        swipeRefreshLayout.setProgressViewEndTarget(true, 150)
+        swipeRefreshLayout.setSize(SwipeRefreshLayout.LARGE)
+        swipeRefreshLayout.setProgressBackgroundColor(R.color.colorPrimary)
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent)
+        swipeRefreshLayout.setOnRefreshListener{
+            getIp()
+        }
+
+
         val ips  = resources.getStringArray(R.array.ips)
         val spinnerAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, ips)
         spinner.adapter = spinnerAdapter
@@ -54,10 +65,9 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {//function
-
                 val url = parent!!.adapter.getItem(position).toString()
                 IP_URL = url
-                ToastUtils.showShort("你选择的检测域名是：$url")
+                getIp()
             }
         }
         spinner.setSelection(ips.indexOf(IP_URL))
@@ -69,6 +79,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getIp() {
+        swipeRefreshLayout.isRefreshing = true
         Thread {
             val ip = NetworkUtils.getIPAddress(true)
             val isWifi = NetworkUtils.isWifiAvailable()
@@ -82,7 +93,7 @@ class MainActivity : AppCompatActivity() {
             responseText += if (cmdIpInfo.result == 0) {
                 cmdIpInfo.successMsg
             } else {
-                cmdIpInfo.errorMsg
+                "错误信息：\n\n${cmdIpInfo.errorMsg}"
             }
 
             val msg : Message = handler.obtainMessage()
