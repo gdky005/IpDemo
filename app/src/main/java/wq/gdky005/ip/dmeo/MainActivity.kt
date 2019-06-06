@@ -1,17 +1,22 @@
 package wq.gdky005.ip.dmeo
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.support.design.widget.Snackbar
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.blankj.utilcode.util.NetworkUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ShellUtils
+import com.blankj.utilcode.util.ToastUtils
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import org.json.JSONObject
@@ -143,31 +148,45 @@ class MainActivity : AppCompatActivity() {
         }.start()
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-////        menuInflater.inflate(R.menu.menu_main, menu)
-//        return super.onCreateOptionsMenu(menu)
-//
-//    }
-//
-//    /**
-//     * 显示menu的icon,通过反射,设置Menu的icon显示.
-//     * @param view
-//     * @param menu
-//     * @return
-//     */
-//    override fun onPrepareOptionsPanel(view: View, menu: Menu?): Boolean {
-//        if (menu != null) {
-//            if (menu.javaClass.simpleName == "MenuBuilder") {
-//                try {
-//                    val m = menu.javaClass.getDeclaredMethod("setOptionalIconsVisible", java.lang.Boolean.TYPE)
-//                    m.isAccessible = true
-//                    m.invoke(menu, true)
-//                } catch (e: Exception) {
-//                    Log.e(javaClass.simpleName, "onMenuOpened...unable to set icons for overflow menu", e)
-//                }
-//
-//            }
-//        }
-//        return true
-//    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return super.onCreateOptionsMenu(menu)
+
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        return when (item.itemId) {
+            R.id.action_ip_history -> {
+                ToastUtils.showShort("hello!")
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    /**
+     * 显示menu的icon,通过反射,设置Menu的icon显示.
+     * @param view
+     * @param menu
+     * @return
+     */
+    @SuppressLint("RestrictedApi")
+    override fun onPrepareOptionsPanel(view: View?, menu: Menu?): Boolean {
+        if (menu != null) {
+            if (menu::class.java.simpleName == "MenuBuilder") {
+                try{
+
+                    val method = menu.javaClass.getDeclaredMethod("setOptionalIconsVisible", java.lang.Boolean.TYPE)
+                    method.isAccessible = true
+                    method.invoke(menu, true)
+                } catch (e: Exception) {
+                    Log.e("TAG", "onMenuOpened...unable to set icons for overflow menu", e)
+                }
+            }
+        }
+        return super.onPrepareOptionsPanel(view, menu)
+    }
 }

@@ -2,9 +2,9 @@
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="wq.gdky005.ip.dmeo.MainActivity">
-    <item android:id="@+id/action_settings"
+    <item android:id="@+id/action_ip_history"
           android:title="@string/local_ip_history"
           android:orderInCategory="100"
           android:icon="@android:drawable/ic_menu_recent_history"
-          app:showAsAction="never"/>
+          app:showAsAction="ifRoom"/>
 </menu>
