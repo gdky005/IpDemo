@@ -46,7 +46,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        toolbar.setNavigationOnClickListener{
+            finish()
+        }
 
         swipeRefreshLayout.setProgressViewEndTarget(true, 150)
         swipeRefreshLayout.setSize(SwipeRefreshLayout.LARGE)
