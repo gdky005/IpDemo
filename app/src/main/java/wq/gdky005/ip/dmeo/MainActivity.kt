@@ -10,14 +10,26 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.blankj.utilcode.util.NetworkUtils
+import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ShellUtils
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
+import org.json.JSONObject
+import java.util.*
+
+
 
 
 class MainActivity : AppCompatActivity() {
 
     companion object {
+        var SP_FILE_NAME = "sp_file_name"
+        var SP_KEY_TIMESTAMP = "sp_key_timestamp"
+        var SP_KEY_BASE_TEXT = "sp_key_base_text"
+        var SP_KEY_RESPONSE_TEXT = "sp_key_response_text"
+        var SP_KEY_INFO = "sp_key_info"
+
+
         var FLAG_MSG_UPDATE_UI = 1
         var IP_URL = "cip.cc"
     }
@@ -31,6 +43,15 @@ class MainActivity : AppCompatActivity() {
 
                 tv_base_info.text = text
                 tv_response_info.text = responseText
+
+                val obj = JSONObject()
+                obj.putOpt(SP_KEY_TIMESTAMP, System.currentTimeMillis())
+                obj.putOpt(SP_KEY_BASE_TEXT, text)
+                obj.putOpt(SP_KEY_RESPONSE_TEXT, responseText)
+
+
+
+                SPUtils.getInstance(SP_FILE_NAME).put(""+System.currentTimeMillis(), obj.toString())
 
                 swipeRefreshLayout.isRefreshing = false
                 Snackbar.make(fab, "$IP_URL 检测完成", Snackbar.LENGTH_LONG)
@@ -74,9 +95,20 @@ class MainActivity : AppCompatActivity() {
             }
         }
         spinner.setSelection(ips.indexOf(IP_URL))
-        getIp()
 
         fab.setOnClickListener {
+            val allSPData = SPUtils.getInstance(SP_FILE_NAME).all
+
+            //这里将map.entrySet()转换成list
+            val list = allSPData.keys.toMutableList()
+            //然后通过比较器来实现排序
+            Collections.sort(list, object : Comparator<String> {
+                //降序排序
+                override fun compare(o1: String?, o2: String?): Int {
+                    return o2!!.toLong().compareTo(o1!!.toLong())
+                }
+            })
+
             getIp()
         }
     }
@@ -110,4 +142,32 @@ class MainActivity : AppCompatActivity() {
             handler.sendMessage(msg)
         }.start()
     }
+
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+////        menuInflater.inflate(R.menu.menu_main, menu)
+//        return super.onCreateOptionsMenu(menu)
+//
+//    }
+//
+//    /**
+//     * 显示menu的icon,通过反射,设置Menu的icon显示.
+//     * @param view
+//     * @param menu
+//     * @return
+//     */
+//    override fun onPrepareOptionsPanel(view: View, menu: Menu?): Boolean {
+//        if (menu != null) {
+//            if (menu.javaClass.simpleName == "MenuBuilder") {
+//                try {
+//                    val m = menu.javaClass.getDeclaredMethod("setOptionalIconsVisible", java.lang.Boolean.TYPE)
+//                    m.isAccessible = true
+//                    m.invoke(menu, true)
+//                } catch (e: Exception) {
+//                    Log.e(javaClass.simpleName, "onMenuOpened...unable to set icons for overflow menu", e)
+//                }
+//
+//            }
+//        }
+//        return true
+//    }
 }
