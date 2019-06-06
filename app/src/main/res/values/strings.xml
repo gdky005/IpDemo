@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">IpDemo</string>
+    <string name="app_name">查询手机 IP</string>
     <string name="action_settings">Settings</string>
 </resources>
