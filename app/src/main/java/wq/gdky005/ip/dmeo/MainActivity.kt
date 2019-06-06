@@ -1,6 +1,7 @@
 package wq.gdky005.ip.dmeo
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
@@ -16,11 +17,9 @@ import android.widget.ArrayAdapter
 import com.blankj.utilcode.util.NetworkUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ShellUtils
-import com.blankj.utilcode.util.ToastUtils
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import org.json.JSONObject
-import java.util.*
 
 
 
@@ -102,20 +101,19 @@ class MainActivity : AppCompatActivity() {
         spinner.setSelection(ips.indexOf(IP_URL))
 
         fab.setOnClickListener {
-            val allSPData = SPUtils.getInstance(SP_FILE_NAME).all
-
-            //这里将map.entrySet()转换成list
-            val list = allSPData.keys.toMutableList()
-            //然后通过比较器来实现排序
-            Collections.sort(list, object : Comparator<String> {
-                //降序排序
-                override fun compare(o1: String?, o2: String?): Int {
-                    return o2!!.toLong().compareTo(o1!!.toLong())
-                }
-            })
-
             getIp()
         }
+
+        clearAllData()
+    }
+
+    /**
+     * 当达到 X 条记录的时候，清空所有的
+     */
+    private fun clearAllData() {
+        val isClean = SPUtils.getInstance(SP_FILE_NAME).all.size > 200
+        if (isClean)
+            SPUtils.getInstance(SP_FILE_NAME).clear()
     }
 
     private fun getIp() {
@@ -160,7 +158,7 @@ class MainActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.action_ip_history -> {
-                ToastUtils.showShort("hello!")
+                startActivity(Intent(this, SPListActivity::class.java))
                 true
             }
             else -> super.onOptionsItemSelected(item)
