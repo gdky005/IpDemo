@@ -58,8 +58,8 @@ class MainActivity : AppCompatActivity() {
                 SPUtils.getInstance(SP_FILE_NAME).put(""+System.currentTimeMillis(), obj.toString())
 
                 swipeRefreshLayout.isRefreshing = false
-                Snackbar.make(fab, "$IP_URL 检测完成", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+                Snackbar.make(fab, IP_URL + resources.getString(R.string.check_finish), Snackbar.LENGTH_LONG)
+                    .setAction("", null).show()
             }
             else -> {
             }
@@ -124,14 +124,14 @@ class MainActivity : AppCompatActivity() {
             val wifiIp = NetworkUtils.getIpAddressByWifi()
             val cmdIpInfo = ShellUtils.execCmd("curl $IP_URL", false)
 
-            val text = "当前的网络 ip 是：$ip \n Wifi 状态：$isWifi ===> $wifiIp"
+            val text = getString(R.string.current_network_info) + ip +  getString(R.string.wifi_state_text) + isWifi + " ===> " + wifiIp
 
-            var responseText = "curl 获取的 ip 信息：\n\n\n"
+            var responseText = getString(R.string.current_network_curl_title)
 
             responseText += if (cmdIpInfo.result == 0) {
                 cmdIpInfo.successMsg
             } else {
-                "错误信息：\n\n${cmdIpInfo.errorMsg}"
+                getString(R.string.current_network_error_info) + cmdIpInfo.errorMsg
             }
 
             val msg : Message = handler.obtainMessage()

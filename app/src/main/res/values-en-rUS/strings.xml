@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Query mobile IP</string>
+    <string name="local_ip_history">Query IP history</string>
+    <string name="check_finish">Check Finish</string>
+    <string name="wifi_state_text"> \n Wifi state:</string>
+    <string name="current_network_info">The current network IP is:</string>
+    <string name="current_network_curl_title">Curl get ip info：\n\n\n</string>
+    <string name="current_network_error_info">Error message：\n\n</string>
+    <string name="check_ip_host_text">Please select the domain name you want to detect：</string>
+</resources>

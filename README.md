@@ -49,3 +49,13 @@ IpDemo
 
 - ipinfo.io/json
 - www.trackip.net/ip?json  `{"Country":"CN","IP":"61.237.49.202","Time":"2019-03-06T11:03:32Z","UA":"curl/7.24.0"}`
+
+## 国际化
+
+https://blog.csdn.net/qiuhu0793/article/details/8689685
+
+## 中文到粤语
+https://yue.micblo.com/
+
+## 简体字转繁体字
+http://www.aies.cn/

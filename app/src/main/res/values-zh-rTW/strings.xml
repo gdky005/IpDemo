@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">查詢手機 IP</string>
+    <string name="local_ip_history">查詢 IP 歷史</string>
+    <string name="check_finish">檢測完成</string>
+    <string name="wifi_state_text"> \n Wifi 狀態：</string>
+    <string name="current_network_info">當前的網絡 ip 是：</string>
+    <string name="current_network_curl_title">curl 獲取的 ip 信息：\n\n\n</string>
+    <string name="current_network_error_info">錯誤信息：\n\n</string>
+    <string name="check_ip_host_text">請選擇需要 檢測的 域名：</string>
+</resources>
