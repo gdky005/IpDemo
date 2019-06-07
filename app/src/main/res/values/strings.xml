@@ -1,10 +1,10 @@
 <resources>
-    <string name="app_name">查询手机 IP</string>
-    <string name="local_ip_history">查询 IP 历史</string>
-    <string name="check_finish">检测完成</string>
-    <string name="wifi_state_text"> \n Wifi 状态：</string>
-    <string name="current_network_info">当前的网络 ip 是：</string>
-    <string name="current_network_curl_title">curl 获取的 ip 信息：\n\n\n</string>
-    <string name="current_network_error_info">错误信息：\n\n</string>
-    <string name="check_ip_host_text">请选择需要 检测的 域名：</string>
+    <string name="app_name">Query mobile IP</string>
+    <string name="local_ip_history">Query IP history</string>
+    <string name="check_finish">Check Finish</string>
+    <string name="wifi_state_text"> \n Wifi state:</string>
+    <string name="current_network_info">The current network IP is:</string>
+    <string name="current_network_curl_title">Curl get ip info：\n\n\n</string>
+    <string name="current_network_error_info">Error message：\n\n</string>
+    <string name="check_ip_host_text">Please select the domain name you want to detect：</string>
 </resources>
