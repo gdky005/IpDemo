@@ -7,11 +7,11 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "wq.gdky005.ip.dmeo"
+        applicationId "com.zkteam.ip"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 10001
-        versionName "1.0.1"
+        versionCode 10002
+        versionName "1.0.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
