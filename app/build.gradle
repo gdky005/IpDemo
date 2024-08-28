@@ -7,12 +7,11 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "wq.gdky005.ip.dmeo"
+        applicationId "wq.gdky005.ip.demo"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 10003
-        versionName "1.0.3"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        versionCode 10100
+        versionName "1.1.0"
     }
     buildTypes {
         release {
@@ -36,8 +35,4 @@ dependencies {
 
 //    implementation 'com.blankj:utilcode:1.24.2'
     implementation 'com.github.ZhuoKeTeam:zhuoke-sdk:1.1.1'
-
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
