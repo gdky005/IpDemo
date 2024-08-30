@@ -16,10 +16,12 @@ android {
 
     signingConfigs {
         release {
-            storeFile file('wangqing.keystore')
+            storeFile file('2024-08-30_wq_release_old_key.jks')
             storePassword 'wq12345678'
             keyAlias 'wangqing'
             keyPassword 'wq12345678'
+            v1SigningEnabled true
+            v2SigningEnabled true
         }
     }
 
