@@ -7,15 +7,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.TimeUtils
-import kotlinx.android.synthetic.main.activity_sp_list_main.*
+import wq.gdky005.ip.dmeo.databinding.ActivitySpListMainBinding
 import java.util.*
 
 
 class SPListActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivitySpListMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sp_list_main)
+
+        binding = ActivitySpListMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
 //        swipeRefreshLayout.setProgressViewEndTarget(true, 150)
@@ -43,8 +47,8 @@ class SPListActivity : AppCompatActivity() {
         }
         val adapter = SPListAdapter(R.layout.item_list, list2)
 
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.adapter = adapter
 
         adapter.setOnItemClickListener { _, _, position ->
             startActivity(

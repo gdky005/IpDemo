@@ -3,14 +3,17 @@ package wq.gdky005.ip.dmeo
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_sp_detail_main.*
 import org.json.JSONObject
+import wq.gdky005.ip.dmeo.databinding.ActivitySpDetailMainBinding
 
 class SPDetailActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivitySpDetailMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sp_detail_main)
+        binding = ActivitySpDetailMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         val time = intent.getStringExtra(MainActivity.SP_KEY_TIMESTAMP)
@@ -20,9 +23,9 @@ class SPDetailActivity : AppCompatActivity() {
         val text = obj.optString(MainActivity.SP_KEY_BASE_TEXT)
         val responseText =  obj.optString(MainActivity.SP_KEY_RESPONSE_TEXT)
 
-        tv_time.text = time
-        tv_base_info.text = text
-        tv_response_info.text = responseText
+        binding.tvTime.text = time
+        binding.tvBaseInfo.text = text
+        binding.tvResponseInfo.text = responseText
 
     }
 

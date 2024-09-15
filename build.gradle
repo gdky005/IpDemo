@@ -4,7 +4,7 @@ buildscript {
 //    apply from: 'http://www.zkteam.cc/android/gradle/versions.gradle'
     apply from: 'versions.gradle'
 
-    ext.kotlin_version = '1.6.20'
+    ext.kotlin_version = '2.0.20'
     addRepos(repositories)
     dependencies {
         classpath 'com.android.tools.build:gradle:7.3.1'

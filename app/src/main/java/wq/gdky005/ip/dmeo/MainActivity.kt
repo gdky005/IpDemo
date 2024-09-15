@@ -1,6 +1,5 @@
 package wq.gdky005.ip.dmeo
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -17,11 +16,8 @@ import com.blankj.utilcode.util.NetworkUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ShellUtils
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.content_main.*
 import org.json.JSONObject
-
-
+import wq.gdky005.ip.dmeo.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
@@ -38,15 +34,20 @@ class MainActivity : AppCompatActivity() {
         var IP_URL = "cip.cc"
     }
 
+    private lateinit var binding: ActivityMainBinding
+
+
+
     private val handler : Handler = Handler{
         when(it.what){
             FLAG_MSG_UPDATE_UI ->{
-                val list = it.obj as List<String>
+                val list = it.obj as List<*>
                 val text = list[0]
                 val responseText = list[1]
 
-                tv_base_info.text = text
-                tv_response_info.text = responseText
+
+                binding.contentMain.tvBaseInfo.text = text.toString()
+                binding.contentMain.tvResponseInfo.text = responseText.toString()
 
                 val obj = JSONObject()
                 obj.putOpt(SP_KEY_TIMESTAMP, System.currentTimeMillis())
@@ -57,8 +58,8 @@ class MainActivity : AppCompatActivity() {
 
                 SPUtils.getInstance(SP_FILE_NAME).put(""+System.currentTimeMillis(), obj.toString())
 
-                swipeRefreshLayout.isRefreshing = false
-                Snackbar.make(fab, IP_URL + resources.getString(R.string.check_finish), Snackbar.LENGTH_LONG)
+                binding.contentMain.swipeRefreshLayout.isRefreshing = false
+                Snackbar.make(binding.fab, IP_URL + resources.getString(R.string.check_finish), Snackbar.LENGTH_LONG)
                     .setAction("", null).show()
             }
             else -> {
@@ -69,12 +70,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        toolbar.setNavigationOnClickListener{
+        binding.toolbar.setNavigationOnClickListener{
             finish()
         }
+
+        var swipeRefreshLayout = binding.contentMain.swipeRefreshLayout
 
         swipeRefreshLayout.setProgressViewEndTarget(true, 150)
         swipeRefreshLayout.setSize(SwipeRefreshLayout.LARGE)
@@ -87,8 +91,8 @@ class MainActivity : AppCompatActivity() {
 
         val ips  = resources.getStringArray(R.array.ips)
         val spinnerAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, ips)
-        spinner.adapter = spinnerAdapter
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.contentMain.spinner.adapter = spinnerAdapter
+        binding.contentMain.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {//function
             }
 
@@ -98,9 +102,9 @@ class MainActivity : AppCompatActivity() {
                 getIp()
             }
         }
-        spinner.setSelection(ips.indexOf(IP_URL))
+        binding.contentMain.spinner.setSelection(ips.indexOf(IP_URL))
 
-        fab.setOnClickListener {
+        binding.fab.setOnClickListener {
             getIp()
         }
 
@@ -117,7 +121,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getIp() {
-        swipeRefreshLayout.isRefreshing = true
+        binding.contentMain.swipeRefreshLayout.isRefreshing = true
         Thread {
             val ip = NetworkUtils.getIPAddress(true)
             val isWifi = NetworkUtils.isWifiAvailable()
@@ -144,5 +148,41 @@ class MainActivity : AppCompatActivity() {
             msg.obj = list
             handler.sendMessage(msg)
         }.start()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return super.onCreateOptionsMenu(menu)
+
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_ip_history -> {
+                startActivity(Intent(this, SPListActivity::class.java))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    /**
+     * 显示menu的icon,通过反射,设置Menu的icon显示.
+     * @param view
+     * @param menu
+     * @return
+     */
+    override fun onPreparePanel(featureId: Int, view: View?, menu: Menu): Boolean {
+        if (menu::class.java.simpleName == "MenuBuilder") {
+            try{
+
+                val method = menu.javaClass.getDeclaredMethod("setOptionalIconsVisible", java.lang.Boolean.TYPE)
+                method.isAccessible = true
+                method.invoke(menu, true)
+            } catch (e: Exception) {
+                Log.e("TAG", "onMenuOpened...unable to set icons for overflow menu", e)
+            }
+        }
+        return super.onPreparePanel(featureId, view, menu)
     }
 }
