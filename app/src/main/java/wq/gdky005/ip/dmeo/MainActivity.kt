@@ -145,46 +145,4 @@ class MainActivity : AppCompatActivity() {
             handler.sendMessage(msg)
         }.start()
     }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return super.onCreateOptionsMenu(menu)
-
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_ip_history -> {
-                startActivity(Intent(this, SPListActivity::class.java))
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    /**
-     * 显示menu的icon,通过反射,设置Menu的icon显示.
-     * @param view
-     * @param menu
-     * @return
-     */
-    @SuppressLint("RestrictedApi")
-    override fun onPrepareOptionsPanel(view: View?, menu: Menu?): Boolean {
-        if (menu != null) {
-            if (menu::class.java.simpleName == "MenuBuilder") {
-                try{
-
-                    val method = menu.javaClass.getDeclaredMethod("setOptionalIconsVisible", java.lang.Boolean.TYPE)
-                    method.isAccessible = true
-                    method.invoke(menu, true)
-                } catch (e: Exception) {
-                    Log.e("TAG", "onMenuOpened...unable to set icons for overflow menu", e)
-                }
-            }
-        }
-        return super.onPrepareOptionsPanel(view, menu)
-    }
 }
