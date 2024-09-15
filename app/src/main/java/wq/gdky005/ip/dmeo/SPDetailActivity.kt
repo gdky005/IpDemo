@@ -1,8 +1,8 @@
 package wq.gdky005.ip.dmeo
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_sp_detail_main.*
 import org.json.JSONObject
 
