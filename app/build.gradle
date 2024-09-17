@@ -15,8 +15,8 @@ android {
         applicationId "wq.gdky005.ip.dmeo"
         minSdkVersion 21
         targetSdkVersion 34
-        versionCode 10005
-        versionName "1.0.5"
+        versionCode 10101
+        versionName "1.1.1"
     }
 
     signingConfigs {
