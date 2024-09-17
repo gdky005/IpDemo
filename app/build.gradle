@@ -8,10 +8,12 @@ plugins {
 }
 
 android {
+    namespace 'wq.gdky005.ip.dmeo'
     compileSdk 34
+
     defaultConfig {
         applicationId "wq.gdky005.ip.dmeo"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 34
         versionCode 10005
         versionName "1.0.5"
@@ -39,34 +41,38 @@ android {
         }
     }
 
-    compileOptions {
-        sourceCompatibility '1.8'
-        targetCompatibility '1.8'
-    }
-
     buildFeatures {
         viewBinding true
     }
-    kotlinOptions {
-        jvmTarget = '17'
+
+    compileOptions {
+        sourceCompatibility '17'
+        targetCompatibility '17'
     }
+
+//    kotlinOptions {
+//        jvmTarget = '17'
+//    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.core:core-ktx:1.13.0'
+
 
     implementation 'com.blankj:utilcodex:1.31.1'
     implementation('com.github.ZhuoKeTeam:zhuoke-sdk:1.1.1', {
         exclude group: 'com.blankj', module: 'utilcode'
     })
 
-    implementation platform('com.google.firebase:firebase-bom:31.2.2')
+
+    implementation platform('com.google.firebase:firebase-bom:33.3.0')
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-crashlytics'
-    implementation 'com.google.android.material:material:1.12.0'
-    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.core:core-ktx:1.10.1'
 }
 
 
