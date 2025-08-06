@@ -102,10 +102,11 @@ tasks.register('renameAndMoveApk') {
 tasks.register('renameAndMoveAab') {
     def versionCode = android.defaultConfig.versionCode
     def versionName = android.defaultConfig.versionName
+    def applicationId = android.defaultConfig.applicationId
     def outputDir = "${projectDir}/release"
     def aabPath = "${projectDir}/release/app-release.aab"
     def aabReleasePath = "${buildDir}/outputs/bundle/release/app-release.aab"
-    def targetPath = "${outputDir}/${rootProject.name}-Release-${versionName}-${versionCode}.aab"
+    def targetPath = "${outputDir}/${rootProject.name}-${applicationId}-Release-${versionName}-${versionCode}.aab"
     doLast {
         file(outputDir).mkdirs()
 
