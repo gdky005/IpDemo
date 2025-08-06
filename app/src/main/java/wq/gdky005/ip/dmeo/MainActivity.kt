@@ -17,7 +17,8 @@ import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ShellUtils
 import com.google.android.material.snackbar.Snackbar
 import org.json.JSONObject
-import wq.gdky005.ip.dmeo.databinding.ActivityMainBinding
+import wq.gdky005.ip.demo.R
+import wq.gdky005.ip.demo.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {

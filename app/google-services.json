@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "600017886610",
     "project_id": "gdky005-180403",
-    "storage_bucket": "gdky005-180403.appspot.com"
+    "storage_bucket": "gdky005-180403.firebasestorage.app"
   },
   "client": [
     {
@@ -29,6 +29,25 @@
         "mobilesdk_app_id": "1:600017886610:android:ab8bc8bdc69a08b9ad754b",
         "android_client_info": {
           "package_name": "wq.gdky005.club.match.game"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuK-P4kRm2u2RhsA2k9_5gvGx6IyILkEs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:600017886610:android:6ef61e9516661a94ad754b",
+        "android_client_info": {
+          "package_name": "wq.gdky005.ip.demo"
         }
       },
       "oauth_client": [],

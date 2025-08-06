@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import org.json.JSONObject
-import wq.gdky005.ip.dmeo.databinding.ActivitySpDetailMainBinding
+import wq.gdky005.ip.demo.databinding.ActivitySpDetailMainBinding
 
 class SPDetailActivity : AppCompatActivity() {
 
