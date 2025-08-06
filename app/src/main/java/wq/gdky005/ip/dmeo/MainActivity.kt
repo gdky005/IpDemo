@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
 
         var FLAG_MSG_UPDATE_UI = 1
-        var IP_URL = "cip.cc"
+        var IP_URL = "ipinfo.io/json"
     }
 
     private lateinit var binding: ActivityMainBinding
