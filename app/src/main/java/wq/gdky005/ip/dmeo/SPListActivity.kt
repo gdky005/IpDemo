@@ -7,8 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.TimeUtils
-import wq.gdky005.ip.demo.R
-import wq.gdky005.ip.demo.databinding.ActivitySpListMainBinding
+import wq.gdky005.ip.dmeo.databinding.ActivitySpListMainBinding
 import java.util.*
 
 

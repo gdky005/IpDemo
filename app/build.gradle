@@ -8,15 +8,16 @@ plugins {
 }
 
 android {
-    namespace 'wq.gdky005.ip.demo'
+    namespace 'wq.gdky005.ip.dmeo'
     compileSdk 35
 
     defaultConfig {
         applicationId "wq.gdky005.ip.demo"
         minSdkVersion 21
+        //noinspection OldTargetApi
         targetSdkVersion 35
-        versionCode 10102
-        versionName "1.1.2"
+        versionCode 10103
+        versionName "1.1.3"
     }
 
     signingConfigs {
@@ -45,14 +46,9 @@ android {
         viewBinding true
     }
 
-    compileOptions {
-        sourceCompatibility '17'
-        targetCompatibility '17'
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
-
-//    kotlinOptions {
-//        jvmTarget = '17'
-//    }
 }
 
 dependencies {

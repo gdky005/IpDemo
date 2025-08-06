@@ -7,7 +7,10 @@ buildscript {
     ext.kotlin_version = '2.0.20'
     addRepos(repositories)
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.11.1'
+        // 本机 Android Studio 的版本是：Android Studio Koala Feature Drop | 2024.1.2 Canary 8，
+        // 所以最高的 com.android.tools.build:gradle 版本是 8.6.0-alpha08，必须在这个以内，选择一个较为稳定的版本：8.5.2。
+        // 这里固定下来，不升级 AS 就不要修改该版本。
+        classpath 'com.android.tools.build:gradle:8.5.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
