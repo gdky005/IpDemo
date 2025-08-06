@@ -9,7 +9,7 @@ plugins {
 
 android {
     namespace 'wq.gdky005.ip.dmeo'
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         applicationId "wq.gdky005.ip.dmeo"
