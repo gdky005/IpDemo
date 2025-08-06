@@ -8,11 +8,11 @@ plugins {
 }
 
 android {
-    namespace 'wq.gdky005.ip.dmeo'
-    compileSdk 34
+    namespace 'wq.gdky005.ip.demo'
+    compileSdk 35
 
     defaultConfig {
-        applicationId "wq.gdky005.ip.dmeo"
+        applicationId "wq.gdky005.ip.demo"
         minSdkVersion 21
         targetSdkVersion 35
         versionCode 10102
@@ -21,7 +21,7 @@ android {
 
     signingConfigs {
         release {
-            storeFile file('2024-08-30_wq_release_old_key.jks')
+            storeFile file('wangqing_new_demo_key.keystore')
             storePassword 'wq12345678'
             keyAlias 'wangqing'
             keyPassword 'wq12345678'
